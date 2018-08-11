@@ -1,0 +1,355 @@
+﻿<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#!/Home"><i class="fas fa-home"></i> Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+  </ol>
+</nav>
+
+<!-- ContainerStart -->
+<div class="container">
+    <div class="row">
+        <div class="card col-md-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-3"><i class="fas fa-2x fa-user"></i></div>
+                    <div class="col-9 text-right"><h5>{{userData.UserName}}</h5></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card col-md-3 ml-md-3 mt-3 mt-md-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-3"><i class="fas fa-2x fa-dollar-sign"></i></div>
+                    <div class="col-9 text-right"><h5>{{userData.Amount - 0}}</h5></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row mt-5 pb-5">
+        <!--AddMoney -->
+        <div class="col-md-3">
+            <center>
+                <a href="#!/Dashboard" data-toggle="modal" data-target="#AddMoney">
+                    <div class="card cstmcard border-success">
+                        <div class="card-header text-center"><i class="fas fa-6x fa-money-check-alt"></i></div>
+
+                        <div class="card-body text-success pb-5">
+                            <h5 class="card-title">Add Money</h5>
+                            <p class="card-text">Add Money to your Wallet With A Single Click</p>
+                        </div>
+                    </div>
+                </a>
+            </center>
+        </div>
+        <!-- TransferMoney -->
+        <div class="col-md-3 mt-3 mt-md-0">
+            <center>
+                <a href="#!/Dashboard" data-toggle="modal" data-target="#TransferMoney">
+                    <div class="card cstmcard border-info">
+                        <div class="card-header text-center"><i class="far fa-6x fa-handshake"></i></div>
+
+                        <div class="card-body text-info pb-4 pb-md-5">
+                            <h5 class="card-title">Transfer Money</h5>
+                            <p class="card-text">We Provide Secure Payment Gateways</p>
+                        </div>
+                    </div>
+                </a>
+            </center>
+        </div>
+        <!--PaymentHistory-->
+        <div class="col-md-3 mt-3 mt-md-0">
+            <center>
+                <a href="#!/Dashboard" data-toggle="modal" data-target="#PaymentHistory" ng-click="getHistory()">
+                    <div class="card cstmcard border-danger">
+                        <div class="card-header text-center"><i class="fas fa-6x fa-history"></i></div>
+
+                        <div class="card-body text-danger pb-5">
+                            <h5 class="card-title">Payment History</h5>
+                            <p class="card-text">Keep Track of Your Every Transaction</p>
+                        </div>
+                    </div>
+                </a>
+            </center>
+        </div>
+        <!-- UpdateProfile -->
+        <div class="col-md-3 mt-3 mt-md-0">
+            <center>
+                <a href="#!/Dashboard" data-toggle="modal" data-target="#UpdateProfile">
+                    <div class="card cstmcard border-dark">
+                        <div class="card-header text-center"><i class="fas fa-6x fa-user-circle"></i></div>
+
+                        <div class="card-body text-dark pb-5">
+                            <h5 class="card-title">Update Profile</h5>
+                            <p class="card-text">Keep Your Profile Updated And Secure</p>
+                        </div>
+                    </div>
+                </a>
+            </center>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <!-- AddMoneyModal -->
+    <div class="modal fade" id="AddMoney" tabindex="-1" role="dialog" aria-labelledby="AddMoneyLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-success" id="AddMoneyLabel">Add Money</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form name="AddMoneyForm" novalidate>
+                        <div class="form-group">
+                            <label>Current Amount</label>
+                            <input type="text" class="form-control" value="{{addMoney.current - 0}}" readonly>
+                        </div>
+
+                        <div class="form-group"  ng-class="{ 'has-error' : AddMoneyForm.moneyAdd.$invalid && !AddMoneyForm.moneyAdd.$pristine }">
+                            <label>Add Amount</label>
+                            <input type="number" name="moneyAdd" class="form-control" min="0" ng-model="addMoney.add" required>
+                            <p ng-show="AddMoneyForm.moneyAdd.$invalid && !AddMoneyForm.moneyAdd.$pristine" class="help-block">Enter a valid Amount</p>
+                        </div>
+
+                        <button class="btn btn-sm btn-success col-md-5" ng-click="addMoneyfun()" ng-disabled="AddMoneyForm.$invalid">Add Money</button>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- TransferMoneyModal -->
+    <div class="modal fade" id="TransferMoney" tabindex="-1" role="dialog" aria-labelledby="TransferMoneyLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary" id="TransferMoneyLabel">Transfer Money</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form name="transferForm" novalidate>
+                        <div class="form-group">
+                            <label>Transfer From</label>
+                            <input type="text" name="userPhone" class="form-control" value="{{userData.PhoneNumber}}" readonly>
+                        </div>
+
+                        <div class="form-group" ng-class="{ 'has-error' : transferForm.transAmount.$invalid && !transferForm.transAmount.$pristine }">
+                            <label>Enter Amount</label>
+                            <input type="number" min="0" class="form-control" name="transAmount" ng-model="transferMoney.amount" required>                            
+                            <small>Enter amount to transfer</small>
+                            <p ng-show="transferForm.transAmount.$invalid && !transferForm.transAmount.$pristine" class="help-block">Enter a valid Amount</p>                        
+                        </div>
+
+                        <div class="form-group" ng-class="{ 'has-error' : transferForm.transPhone.$invalid && !transferForm.transPhone.$pristine }">
+                            <label>Transfer To</label>
+                            <input type="number" name="transPhone" ng-minlength="10" ng-maxlength="10" class="form-control" ng-model="transferMoney.phonenumber" required>
+                            <small>Enter Phone number</small>
+                            <p ng-show="transferForm.transPhone.$invalid && !transferForm.transPhone.$pristine" class="help-block">Enter a valid number</p>
+                        </div>
+
+                        <button class="btn btn-sm btn-primary col-md-5" ng-disabled="transferForm.$invalid" ng-click="transferMoneyfun()">Transfer Money</button>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--ConfirmTransactionModal-->
+    <!-- Modal -->
+    <div class="modal fade" id="confirmTrans" tabindex="-1" role="dialog" aria-labelledby="confirmTransTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmTransTitle" ng-show="gotUser">Confirm Transaction</h5>
+                    <h5 class="modal-title" id="confirmTransTitle" ng-hide="gotUser">Error!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" ng-show="gotUser">
+                    Do you want to transfer money to <strong>{{transUserData.UserName}}</strong>?
+                </div>
+                <div class="modal-body" ng-hide="gotUser">
+                    Entered number is incorrect
+                </div>
+                <div class="modal-footer" ng-show="gotUser">
+                    <button type="button" class="btn btn-sm btn-primary col-3" ng-click="confirmTransFun()" data-dismiss="modal">Yes</button>
+                    <button type="button" class="btn btn-sm btn-secondary col-3" data-dismiss="modal">Cancel</button>
+                </div>
+                <div class="modal-footer" ng-hide="gotUser">
+                    <button type="button" class="btn btn-sm btn-secondary col-3" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HistoryModal -->
+    <div class="modal fade" id="PaymentHistory" tabindex="-1" role="dialog" aria-labelledby="PaymentHistoryLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="PaymentHistoryLabel">Payment History</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">User Name</th>
+                                    <th scope="col">Transfer Type</th>
+                                    <th scope="col">Initial Amount</th>
+                                    <th scope="col">Amount Transfer</th>
+                                    <th scope="col">Date &amp; Time</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="x in history">
+                                    <td>{{x.User.UserName}}</td>
+                                    <td><div class="text-success" ng-if="x.TransType==1">Credit</div><div class="text-danger" ng-if="x.TransType==0">Debit</div></td>
+                                    <td>{{x.InitialAmount - 0}}</td>
+                                    <td>{{x.AmountTransfer - 0}}</td>
+                                    <td>{{x.Date}}</td>
+                                    <td><div class="text-success" ng-if="x.Status==1">Success</div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- UpdateProfileModal -->
+    <div class="modal fade" id="UpdateProfile" tabindex="-1" role="dialog" aria-labelledby="UpdateProfileLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-secondary" id="UpdateProfileLabel">Update Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form name="updateForm" novalidate>
+                        <div class="form-group" ng-class="{ 'has-error' : updateForm.updatedName.$invalid && !updateForm.updatedName.$pristine }">
+                            <label>User Name</label>
+                            <input type="text" class="form-control" name="updatedName" ng-model ="updateProfile.UserName" required>
+                            <p ng-show="updateForm.updatedName.$invalid && !updateForm.updatedName.$pristine" class="help-block">Username is required</p>
+                        </div>
+
+                        <div class="form-group" ng-class="{ 'has-error' : updateForm.updatedEmail.$invalid && !updateForm.updatedEmail.$pristine }">
+                            <label>Email</label>
+                            <input type="email" class="form-control" name="updatedEmail" ng-model ="updateProfile.Email" required>
+                            <p ng-show=" updateForm.updatedEmail.$invalid && !updateForm.updatedEmail.$pristine" class="help-block">Enter a valid Email</p>
+                        </div>
+
+                        <div class="form-group" ng-class="{ 'has-error' : updateForm.updatedPhone.$invalid && !updateForm.updatedPhone.$pristine }">
+                            <label>Contact no.</label>
+                            <input type="text" class="form-control" name="updatedPhone" ng-maxlength="10" ng-pattern="/^[6-9][0-9]{9}$/" ng-minlength="10" ng-model ="updateProfile.PhoneNumber" required>
+                            <p ng-show="updateForm.updatedPhone.$invalid && !updateForm.updatedPhone.$pristine" class="help-block">Enter a valid number</p>
+                        </div>
+
+                        <div class="form-group" ng-class="{ 'has-error' : updateForm.updatedPassword.$invalid && !updateForm.updatedPassword.$pristine }">
+                            <label>Password</label>
+                            <input type="password" class="form-control" name="updatedPassword" ng-minlength="6" ng-model ="updateProfile.UserPassword" required>
+                            <p ng-show="updateForm.updatedPassword.$invalid && !updateForm.updatedPassword.$pristine" class="help-block">Password is too short</p>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="upCheck" ng-model="upcheckbox" required>
+                                <label class="form-check-label" for="upCheck">
+                                    I agree with the <strong>Terms and Conditions</strong>.
+                                </label>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-sm btn-dark col-md-5" ng-disabled="updateForm.$invalid" ng-click="confirmUpdateFun()">Update</button>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--msgModal-->
+    <div class="modal fade" id="msgModal" tabindex="-1" role="dialog" aria-labelledby="msgModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary" id="msgModalLabel">{{title}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{msg}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary col-3" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--confirmUpdate-->
+    <div class="modal fade" id="confirmUpdateModal" tabindex="-1" role="dialog" aria-labelledby="confirmUpdateModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary" id="confirmUpdateLabel">Confirm Update</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger" role="alert" ng-show="updateError">
+                        Entered Password is incorrect
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <label>Current Password</label>
+                            <input type="password" class="form-control" ng-model="confirmPassword" required>
+                            <small>Enter your current password here.</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary col-2" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-sm btn-primary col-4" ng-click="updateProfilefun()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- ContainerEnd -->

@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html ng-app="InnoTmapp">
+<head>
+    <title>InnoTm</title>
+	<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/all.css" rel="stylesheet" />
+    <link href="Styles/sweetalert.css" rel="stylesheet" />
+    <link href="Content/style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="sticky-top" ng-include="'App/Header/header.html'"></div>
+    <div ng-view=""></div>
+    <div ng-include="'App/Footer/footer.html'"></div>
+
+
+
+
+
+
+<!-----------------------------BASIC--------------------------------->
+    <script src="Scripts/jquery-3.0.0.min.js"></script>
+    <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/angular-route.min.js"></script>
+    <script src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
+    <script src="Scripts/angular-local-storage.min.js"></script>
+    <script src="Scripts/sweetalert.min.js"></script>
+    <script src="Scripts/SweetAlert.js"></script>
+    <script src="App/app.js"></script>
+
+<!--------------------------CONTROLLERS------------------------------>
+    <script src="App/Controller/headerController.js"></script>
+    <script src="App/Controller/homeController.js"></script>
+    <script src="App/Controller/dashboardController.js"></script>
+    <script src="App/Controller/contactController.js"></script>
+
+<!----------------------------SERVICES------------------------------->
+    <script src="App/Services/userServices.js"></script>
+    <script src="App/Services/transactionService.js"></script>
+</body>
+</html>

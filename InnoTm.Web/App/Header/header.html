@@ -1,0 +1,183 @@
+﻿<head>
+
+    <!-- NavBarStart -->
+
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark" ng-controller="headerController">
+        <a href="#" class="navbar-brand">InnoTm</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Demo" aria-controls="Demo" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <div class="collapse navbar-collapse" id="Demo">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#!/Contact">Contact us</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0" ng-show="loginStatus">
+
+                <li class="nav-item">
+                    <a href="#!/Dashboard" class="nav-link active">Dashboard</a>
+                </li>
+                
+                <li>
+                    <span class="nav-link"><button class="btn btn-xs btn-outline-danger" ng-click="signOutfun()"><i class="fas fa-sign-out-alt"></i></button></span>
+                </li>
+            </ul>
+
+            <form class="form-inline my-2 my-lg-0" ng-hide="loginStatus">
+                <span><button class="btn btn-sm btn-outline-danger my-2 my-sm-0 mr-2" data-toggle="modal" data-target="#Login">Login</button></span>
+                <span><button class="btn btn-sm btn-outline-success my-2 my-sm-0" data-toggle="modal" data-target="#Register">Register</button></span>
+            </form>
+        </div>
+    </nav>
+
+    <!-- NavbarEnd -->
+    <!-- Modal -->
+    <!-- LoginModal -->
+    <div class="modal fade" id="Login" tabindex="-1" role="dialog" aria-labelledby="LoginLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="LoginLabel">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body"  ng-controller="headerController">
+                    <div class="alert alert-danger" role="alert" ng-show="loginError">
+                        Entered Username or Password is incorrect
+                    </div>
+                    <form name="loginForm" novalidate>
+                        <div class="form-group" ng-class="{ 'has-error' : loginForm.loginUname.$invalid && !loginForm.loginUname.$pristine }">
+                            <label>Email</label>
+                            <input type="email" name="loginUname" class="form-control" ng-model="loginData.Email" required>
+                            <p ng-show="loginForm.loginUname.$invalid && !loginForm.loginUname.$pristine" class="help-block">Enter a valid Email</p>
+                        </div>
+
+                        <div class="form-group" ng-class="{ 'has-error' : loginForm.loginPassword.$invalid && !loginForm.loginPassword.$pristine }">
+                            <label>Password</label>
+                            <input type="password" name="loginPassword" ng-minlength="6" class="form-control" ng-model="loginData.Password" required>
+                            <p ng-show="loginForm.loginPassword.$invalid && !loginForm.loginPassword.$pristine" class="help-block">Enter a valid Password</p>
+                        </div>
+
+                        <button class="btn btn-sm btn-danger col-md-4" ng-disabled="loginForm.$invalid" ng-click="loginfun()">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- RegisterModal -->
+    <div class="modal fade" id="Register" tabindex="-1" role="dialog" aria-labelledby="RegisterLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-success" id="RegisterLabel">Register</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body"  ng-controller="headerController">
+                    <form name="regForm" ng-submit="registerfun()" novalidate>
+                        <div class="form-group" ng-class="{ 'has-error' : regForm.regUname.$invalid && !regForm.regUname.$pristine }">
+                            <label>User Name</label>
+                            <input type="text" name="regUname" class="form-control" ng-model="registerData.UserName" required>
+                            <p ng-show="regForm.regUname.$invalid && !regForm.regUname.$pristine" class="help-block">Username is required</p>
+                        </div>
+
+                        <div class="form-group" ng-class="{ 'has-error' : regForm.regEmail.$invalid && !regForm.regEmail.$pristine }">
+                            <label>Email</label>
+                            <input type="email" name="regEmail" class="form-control" ng-model="registerData.Email" required>
+                            <p ng-show="regForm.regEmail.$invalid && !regForm.regEmail.$pristine" class="help-block">Enter a valid Email</p>
+                        </div>
+
+                        <div class="form-group" ng-class="{ 'has-error' : regForm.regContact.$invalid && !regForm.regContact.$pristine }">
+                            <label>Contact Number</label>
+                            <input type="number" class="form-control" ng-maxlength="10" ng-pattern="/^[6-9][0-9]{9}$/" ng-minlength="10" name="regContact" ng-model="registerData.PhoneNumber" required>
+                            <p ng-show="regForm.regContact.$invalid && !regForm.regContact.$pristine" class="help-block">Enter a valid number</p>
+                        </div>
+
+                        <div class="form-group"  ng-class="{ 'has-error' : regForm.regPassword.$invalid && !regForm.regPassword.$pristine }">
+                            <label>Password</label>
+                            <input type="password" name="regPassword" ng-minlength="6" class="form-control" ng-model="registerData.UserPassword" required>
+                            <p ng-show="regForm.regPassword.$invalid && !regForm.regPassword.$pristine" class="help-block">Password is too short</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="text" class="form-control" placeholder="100.00" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck" ng-model="logcheck" required>
+                                <label class="form-check-label" for="gridCheck">
+                                    I agree with the <strong>Terms and Conditions</strong>.
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-sm btn-success col-md-5" ng-disabled="regForm.$invalid">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--signOutModal-->
+    <!--<div class="modal fade" id="signOutmodal" tabindex="-1" role="dialog" aria-labelledby="signOutmodalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary" id="signOutmodalLabel">Confirm Logout</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to logout?
+                </div>
+                <div class="modal-footer" ng-controller="headerController">
+                    <button class="btn btn-sm btn-primary col-3" ng-click="signOutfun()">Yes</button>
+                    <button class="btn btn-sm btn-secondary col-3" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+    <!--successRegister-->
+    <div ng-controller="headerController">
+        <div class="modal fade" id="doneRegModal" tabindex="-1" role="dialog" aria-labelledby="doneRegLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-success" id="doneRegModalLabel">Registration Successfull</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Your account is Successfully Registered.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-success col-3" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</head>

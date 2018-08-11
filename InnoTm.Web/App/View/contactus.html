@@ -1,0 +1,41 @@
+﻿<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#!/Home"><i class="fas fa-home"></i> Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Contactus</li>
+    </ol>
+</nav>
+
+<div class="container">
+    <form name="contactForm" class="col-md-6 offset-md-3" novalidate>
+        <div class="form-group" ng-class="{ 'has-error' : contactForm.contactName.$invalid && !contactForm.contactName.$pristine }">
+            <input type="text" class="form-control" placeholder="Enter your Name" ng-model="userContact.Name" ng-show="loginStatus" readonly>
+            <input type="text" name="contactName" class="form-control" placeholder="Enter your Name" ng-model="userContact.Name" ng-hide="loginStatus" required>
+            <p ng-show="contactForm.contactName.$invalid && !contactForm.contactName.$pristine" class="help-block">Username is required</p>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error' : contactForm.contactEmail.$invalid && !contactForm.contactEmail.$pristine }">
+            <input type="email" class="form-control" placeholder="xyz@abc.com" ng-model="userContact.Email" ng-show="loginStatus"readonly>
+            <input type="email" name="contactEmail" class="form-control" placeholder="xyz@abc.com" ng-model="userContact.Email" ng-hide="loginStatus" required>
+            <p ng-show="contactForm.contactEmail.$invalid && !contactForm.contactEmail.$pristine" class="help-block">Enter a valid email</p>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error' : contactForm.contactNumber.$invalid && !contactForm.contactNumber.$pristine }">
+            <input type="number" class="form-control" placeholder="Enter your Mobile Number" ng-model="userContact.Contact" ng-show="loginStatus" readonly>
+            <input type="number" name="contactNumber" ng-maxlength="10" ng-minlength="10" ng-pattern="/^[6-9][0-9]{9}$/" class="form-control" placeholder="Enter your Mobile Number" ng-model="userContact.Contact" ng-hide="loginStatus" required>
+            <p ng-show="contactForm.contactNumber.$invalid && !contactForm.contactNumber.$pristine" class="help-block">Enter a valid number</p>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error' : contactForm.contactSub.$invalid && !contactForm.contactSub.$pristine }">
+            <input type="text" name="contactSub" class="form-control" placeholder="Subject" ng-maxlength="60" ng-model="userContact.Subject" required>
+            <p ng-show="contactForm.contactSub.$invalid && !contactForm.contactSub.$pristine" class="help-block">Enter your Subject</p>
+            <div ng-if="contactForm.contactSub.$error.maxlength"><p ng-show="contactForm.contactSub.$invalid && !contactForm.contactSub.$pristine" class="help-block">Subject should be less than 60 characters</p></div>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error' : contactForm.contactFeed.$invalid && !contactForm.contactFeed.$pristine }">
+            <textarea class="form-control" name="contactFeed" ng-model="contactFeeds" placeholder="Type your Message/Feedback here..." rows="9" required></textarea>
+            <p ng-show="contactForm.contactFeed.$invalid && !contactForm.contactFeed.$pristine" class="help-block">Enter your Feedback</p>
+        </div>
+
+        <button ng-disabled="contactForm.$invalid" class="btn btn-sm btn-outline-primary col-6 offset-3" ng-click="submitfun()">Submit</button>
+    </form>
+</div>
